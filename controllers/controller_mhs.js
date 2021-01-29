@@ -8,8 +8,15 @@ exports.findAll = (req, res) => {
                 message : "Cant get data from server" || err.message
             })
         } else {
-            console.log(data);
-            res.status(200).send(data)
+            // console.log(data);
+            // res.status(200).send(data)
+            if (data == 0) {
+                res.status(200).send({
+                    message : "Tidak ada data dalam server"
+                })
+            } else {
+                res.send(data)
+            }
         }
     })
 }
