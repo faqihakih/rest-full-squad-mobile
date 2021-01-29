@@ -56,3 +56,45 @@ exports.create = (req, res) => {
         }
     })
 }
+
+exports.update = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message : "isi semua form"
+        })
+    }
+
+    Mahasiswa.update(req.params.idMahasiswa, new Mahasiswa(req.body), (err, data) => {
+        if (err) {
+            if (err.kind == "not found") {
+                res.status(404).send({
+                    message : `data dengan id ${req.params.idMahasiswa} tidak ada`
+                })
+            } else {
+                res.status(500).send({
+                    message : `gagal menerima data dari id ${req.params.idMahasiswa}`
+                })
+            }
+        } else {
+            res.status(200).send(data)
+        }
+    })
+}
+
+exports.delete = (req, res) => {
+    Mahasiswa.delete(req.params.idMahasiswa, (err, data) => {
+        if (err) {
+            if (err.kind == "not found") {
+                res.status(404).send({
+                    message : `data dengan id tersbut tidak ada`
+                })
+            } else {
+                res.status(500).send({
+                    message : `gagal menghapus data dengan id tersbut`
+                })
+            }
+        } else {
+            res.status(200).send({message : "Berhasil menghapus data dengan id tersbut"})
+        }
+    })
+}

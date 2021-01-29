@@ -51,4 +51,41 @@ Mahasiswa.create = (newMahasiswa, result) => {
         result(null, {id : res.insertId, newMahasiswa});
     })
 }
+
+Mahasiswa.update = (idMahasiswa, newMahasiswa, result) => {
+    conn.query("Update Mahasiswa Set nama = ?, kelas = ?, email = ?, alamat = ? Where id = ?", [newMahasiswa.nama, newMahasiswa.kelas, newMahasiswa.email, newMahasiswa.alamat, idMahasiswa], (err, res) => {
+        if (err) {
+            console.log("Error : ", err);
+            result(null, err);
+            return;
+        }
+
+        if (res.affectedRows == 0) {
+            result({kind : "not found"}, null);
+            return;
+        }
+
+        console.log("update mahasiswa", {id : idMahasiswa, ...newMahasiswa});
+        result(null, {id : idMahasiswa, ...newMahasiswa})
+    })
+}
+
+Mahasiswa.delete = (idMahasiswa, result) => {
+    conn.query("delete from Mahasiswa where id = ?", idMahasiswa, (err, res) => {
+        if (err) {
+            console.log("Error : ", err);
+            result(null, err);
+            return
+        }
+
+        if (res.affectedRows == 0) {
+            result({kind : "not found"}, null)
+            return;
+        }
+
+        console.log("delete mahasiswa dangan id "+idMahasiswa);
+        result(null, res);
+    })
+}
+
 module.exports = Mahasiswa;

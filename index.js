@@ -19,6 +19,8 @@ app.get('/', (re, res) => {
 app.get('/mahasiswa', mahasiswaController.findAll);
 app.get('/mahasiswa/:idMahasiswa', mahasiswaController.findOne);
 app.post('/mahasiswa', mahasiswaController.create);
+app.put('/mahasiswa/:idMahasiswa', mahasiswaController.update);
+app.delete('/mahasiswa/:idMahasiswa', mahasiswaController.delete);
 
 
 app.listen(port, () => {
